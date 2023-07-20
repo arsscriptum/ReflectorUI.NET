@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="Reflector.UI.About" Title="About" Width="450" Height="152" Background="#FF000000" Foreground="#FFFFFFFF" WindowStyle="None" ShowInTaskbar="False" AllowsTransparency="True" Opacity="0" Focusable="False" WindowStartupLocation="CenterScreen" FontFamily="{Binding UIFont, Source={x:Static local:Options.Instance}}" FontSize="{Binding UIFontSize, Source={x:Static local:Options.Instance}}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Reflector.UI">
+  <Window.Resources>
+    <ImageSource x:Key="bs">blackstorm.png</ImageSource>
+  </Window.Resources>
+  <StackPanel Orientation="Vertical">
+    <Image Source="{StaticResource bs}" VerticalAlignment="Top" />
+    <Grid Name="txt" />
+  </StackPanel>
+</Window>

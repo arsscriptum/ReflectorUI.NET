@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application x:Class="Reflector.UI.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+          <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="Themes/ExpressionDark.xaml" />
+            <ResourceDictionary Source="/AvalonDock.Themes;component/themes/ExpressionDark.xaml" />
+          </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <ResourceDictionary Source="Generic.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <ImageSource x:Key="asmMgr">Icons/asmMgr.png</ImageSource>
+      <ImageSource x:Key="infos">Icons/infos.png</ImageSource>
+      <ImageSource x:Key="open">Icons/open.png</ImageSource>
+      <ImageSource x:Key="save">Icons/save.png</ImageSource>
+      <ImageSource x:Key="close">Icons/close.png</ImageSource>
+      <ImageSource x:Key="stop">Icons/stop.png</ImageSource>
+      <ImageSource x:Key="goto">Icons/goto.png</ImageSource>
+      <ImageSource x:Key="options">Icons/options.png</ImageSource>
+      <ImageSource x:Key="analyze">Icons/analyze.png</ImageSource>
+      <ImageSource x:Key="bookmark">Icons/bookmark.png</ImageSource>
+      <ImageSource x:Key="disasm">Icons/disassembly.png</ImageSource>
+      <ImageSource x:Key="togglebk">Icons/toggle_bookmark.png</ImageSource>
+      <ImageSource x:Key="refresh">Icons/reload.png</ImageSource>
+      <ImageSource x:Key="dback">Icons/back.png</ImageSource>
+      <ImageSource x:Key="dforward">Icons/forward.png</ImageSource>
+      <ImageSource x:Key="dstop">Icons/stop.png</ImageSource>
+      <ImageSource x:Key="dgoto">Icons/goto.png</ImageSource>
+      <ImageSource x:Key="drefr">Icons/reload.png</ImageSource>
+      <ImageSource x:Key="search">Icons/search.png</ImageSource>
+      <ImageSource x:Key="code">Icons/code.png</ImageSource>
+      <ImageSource x:Key="bytes">Icons/bytes.png</ImageSource>
+      <ImageSource x:Key="regex">Icons/regex.png</ImageSource>
+      <ImageSource x:Key="asm">Icons/assembly.png</ImageSource>
+      <ImageSource x:Key="cst">Icons/constant.png</ImageSource>
+      <ImageSource x:Key="ctor">Icons/constructor.png</ImageSource>
+      <ImageSource x:Key="dele">Icons/delegate.png</ImageSource>
+      <ImageSource x:Key="enum">Icons/enum.png</ImageSource>
+      <ImageSource x:Key="evt">Icons/event.png</ImageSource>
+      <ImageSource x:Key="fld">Icons/field.png</ImageSource>
+      <ImageSource x:Key="iface">Icons/interface.png</ImageSource>
+      <ImageSource x:Key="itn">Icons/internal.png</ImageSource>
+      <ImageSource x:Key="mtd">Icons/method.png</ImageSource>
+      <ImageSource x:Key="mod">Icons/module.png</ImageSource>
+      <ImageSource x:Key="ns">Icons/namespace.png</ImageSource>
+      <ImageSource x:Key="omtd">Icons/omethod.png</ImageSource>
+      <ImageSource x:Key="priv">Icons/private.png</ImageSource>
+      <ImageSource x:Key="prop">Icons/property.png</ImageSource>
+      <ImageSource x:Key="prot">Icons/protected.png</ImageSource>
+      <ImageSource x:Key="stat">Icons/static.png</ImageSource>
+      <ImageSource x:Key="type">Icons/type.png</ImageSource>
+      <ImageSource x:Key="vt">Icons/valuetype.png</ImageSource>
+      <ImageSource x:Key="wait1">Icons/loading1.png</ImageSource>
+      <ImageSource x:Key="wait2">Icons/loading2.png</ImageSource>
+      <ImageSource x:Key="wait3">Icons/loading3.png</ImageSource>
+      <ImageSource x:Key="wait4">Icons/loading4.png</ImageSource>
+      <ImageSource x:Key="wait5">Icons/loading5.png</ImageSource>
+      <ImageSource x:Key="wait6">Icons/loading6.png</ImageSource>
+      <ImageSource x:Key="wait7">Icons/loading7.png</ImageSource>
+      <ImageSource x:Key="wait8">Icons/loading8.png</ImageSource>
+      <ImageSource x:Key="err">Icons/error.png</ImageSource>
+      <ImageSource x:Key="folder">Icons/folder.png</ImageSource>
+      <ImageSource x:Key="file">Icons/file.png</ImageSource>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

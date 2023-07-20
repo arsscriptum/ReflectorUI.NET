@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Reflector.UI">
+  <Style x:Key="{x:Type local:Disassembly}" TargetType="{x:Type local:Disassembly}">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:Disassembly}">
+          <Grid Background="{DynamicResource ControlBackgroundBrush}">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid FocusManager.IsFocusScope="False" Background="{DynamicResource NormalBrush}" Margin="5,2,5,0">
+              <ToolBar Name="PART_toolbar" Height="20" ToolBarTray.IsLocked="True" />
+              <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Right">
+                <ComboBox Name="PART_langs" DisplayMemberPath="Name" Width="100" SelectedIndex="0" Height="20" Margin="0,0,5,0" ItemsSource="{Binding Languages, Source={x:Static local:App.Reflector}}" SelectedItem="{Binding CurrentLanguage, Mode=TwoWay}" />
+                <Grid Width="120">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="20px" />
+                  </Grid.ColumnDefinitions>
+                  <TextBox Name="PART_search" Grid.Column="0" Grid.ColumnSpan="2" Width="120" Height="20" BorderThickness="1" BorderBrush="#FF000000" />
+                  <Button Name="PART_doSearch" Grid.Column="1" Grid.ColumnSpan="1" Width="20" Height="20" IsDefault="True">
+                    <Button.Template>
+                      <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter />
+                      </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="{DynamicResource search}" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="16" Height="16" />
+                  </Button>
+                </Grid>
+              </StackPanel>
+            </Grid>
+            <TextEditor Name="PART_dis" Grid.Row="1" IsReadOnly="True" Background="{DynamicResource ControlBackgroundBrush}" Margin="5" Foreground="{DynamicResource DisTextBrush}" FontFamily="{Binding DisassemblerFont, Source={x:Static local:Options.Instance}}" FontSize="{Binding DisassemblerFontSize, Source={x:Static local:Options.Instance}}">
+              <TextEditor.Options>
+                <TextEditorOptions AllowScrollBelowDocument="True" EnableHyperlinks="False" EnableEmailHyperlinks="False" />
+              </TextEditor.Options>
+            </TextEditor>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type local:ResourceViewer}" TargetType="{x:Type local:ResourceViewer}">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:ResourceViewer}">
+          <ContentPresenter />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type local:Bookmarks}" TargetType="{x:Type local:Bookmarks}">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:Bookmarks}">
+          <ListBox Name="PART_listBox">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                  <Image RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Margin="2" Source="{Binding Img}" />
+                  <TextBlock Name="txt" TextBlock.Foreground="{DynamicResource LightTextBrush}" VerticalAlignment="Center" Text="{Binding Txt}" />
+                </StackPanel>
+                <DataTemplate.Triggers>
+                  <DataTrigger Value="False" Binding="{Binding Fg}">
+                    <Setter TargetName="txt" Value="{DynamicResource DarkTextBrush}" Property="TextBlock.Foreground" />
+                  </DataTrigger>
+                </DataTemplate.Triggers>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type local:Search}" TargetType="{x:Type local:Search}">
+    <Style.Resources>
+      <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type RadioButton}">
+              <Border Name="border" BorderThickness="0.5" CornerRadius="1" BorderBrush="{DynamicResource DefaultedBorderBrush}" Background="{DynamicResource MainLight}">
+                <ContentPresenter />
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                  <Setter TargetName="border" Value="{DynamicResource MainDeep}" Property="Border.Background" />
+                </Trigger>
+                <Trigger Property="UIElement.IsEnabled" Value="False">
+                  <Setter TargetName="border" Value="{DynamicResource DisabledBorderBrush}" Property="Border.BorderBrush" />
+                </Trigger>
+                <MultiTrigger>
+                  <MultiTrigger.Conditions>
+                    <Condition Property="ToggleButton.IsChecked" Value="False" />
+                    <Condition Property="UIElement.IsMouseOver" Value="True" />
+                  </MultiTrigger.Conditions>
+                  <Setter TargetName="border" Value="{DynamicResource MainMedian}" Property="Border.Background" />
+                </MultiTrigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+      <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type CheckBox}">
+              <Border Name="border" BorderThickness="0.5" CornerRadius="1" BorderBrush="{DynamicResource DefaultedBorderBrush}" Background="{DynamicResource MainLight}">
+                <ContentPresenter />
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                  <Setter TargetName="border" Value="{DynamicResource MainDeep}" Property="Border.Background" />
+                </Trigger>
+                <Trigger Property="UIElement.IsEnabled" Value="False">
+                  <Setter TargetName="border" Value="{DynamicResource DisabledBorderBrush}" Property="Border.BorderBrush" />
+                </Trigger>
+                <MultiTrigger>
+                  <MultiTrigger.Conditions>
+                    <Condition Property="ToggleButton.IsChecked" Value="False" />
+                    <Condition Property="UIElement.IsMouseOver" Value="True" />
+                  </MultiTrigger.Conditions>
+                  <Setter TargetName="border" Value="{DynamicResource MainMedian}" Property="Border.Background" />
+                </MultiTrigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+      <Style TargetType="{x:Type Button}">
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type Button}">
+              <Border Name="border" BorderThickness="0.5" CornerRadius="1" BorderBrush="{DynamicResource DefaultedBorderBrush}" Background="{DynamicResource MainLight}">
+                <ContentPresenter />
+              </Border>
+              <ControlTemplate.Triggers>
+                <Trigger Property="ButtonBase.IsPressed" Value="True">
+                  <Setter TargetName="border" Value="{DynamicResource MainDeep}" Property="Border.Background" />
+                </Trigger>
+                <Trigger Property="UIElement.IsEnabled" Value="False">
+                  <Setter TargetName="border" Value="{DynamicResource DisabledBorderBrush}" Property="Border.BorderBrush" />
+                </Trigger>
+                <MultiTrigger>
+                  <MultiTrigger.Conditions>
+                    <Condition Property="ButtonBase.IsPressed" Value="False" />
+                    <Condition Property="UIElement.IsMouseOver" Value="True" />
+                  </MultiTrigger.Conditions>
+                  <Setter TargetName="border" Value="{DynamicResource MainMedian}" Property="Border.Background" />
+                </MultiTrigger>
+              </ControlTemplate.Triggers>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+      <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}">
+        <Setter Property="Control.Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="{x:Type TextBox}">
+              <Border Focusable="False" Background="{TemplateBinding Control.Background}" BorderBrush="{DynamicResource DefaultedBorderBrush}" BorderThickness="1" CornerRadius="1">
+                <Border Name="PART_ContentHost" Focusable="False" VerticalAlignment="Center" />
+              </Border>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Style>
+    </Style.Resources>
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:Search}">
+          <Grid Background="{TemplateBinding Control.Background}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="225px" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="25px" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBox Name="PART_text" Grid.Row="0" Grid.Column="0" Margin="2" Background="{DynamicResource ControlBackgroundBrush}" Foreground="{DynamicResource TextBrush}" />
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+              <Button Name="PART_search" Height="20" Width="20" Margin="2" IsDefault="True">
+                <Grid>
+                  <local:Bitmap x:Name="search" Source="{DynamicResource search}" Margin="2" />
+                  <local:Bitmap x:Name="abort" Source="{DynamicResource stop}" Margin="2" Visibility="Hidden" />
+                </Grid>
+              </Button>
+              <StackPanel Orientation="Horizontal" Margin="2,0,2,0">
+                <RadioButton Name="PART_type" Height="20" Width="20" Margin="2" ToolTip="Search Types" IsChecked="True">
+                  <local:Bitmap Source="{DynamicResource type}" Margin="1" Height="16" Width="16" />
+                </RadioButton>
+                <RadioButton Name="PART_member" Height="20" Width="20" Margin="2" ToolTip="Search Members">
+                  <local:Bitmap Source="{DynamicResource prop}" Margin="1" Height="16" Width="16" />
+                </RadioButton>
+                <RadioButton Name="PART_const" Height="20" Width="20" Margin="2" ToolTip="Search Constants">
+                  <local:Bitmap Source="{DynamicResource enum}" Margin="1" Height="16" Width="16" />
+                </RadioButton>
+                <RadioButton Name="PART_code" Height="20" Width="20" Margin="2" ToolTip="Search Codes">
+                  <local:Bitmap Source="{DynamicResource code}" Margin="1" Height="16" Width="16" />
+                </RadioButton>
+                <RadioButton Name="PART_bytes" Height="20" Width="20" Margin="2" ToolTip="Search IL Bytes">
+                  <local:Bitmap Source="{DynamicResource bytes}" Margin="1" Height="16" Width="16" />
+                </RadioButton>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" Margin="2,0,2,0">
+                <RadioButton Name="PART_none" Height="20" Width="20" Margin="2" ToolTip="None" />
+                <RadioButton Name="PART_exact" Height="20" Width="20" Margin="2" ToolTip="Exact Match">
+                  <local:Bitmap Source="{DynamicResource cst}" Margin="1" Height="16" Width="16" />
+                </RadioButton>
+                <RadioButton Name="PART_regex" Height="20" Width="20" Margin="2" ToolTip="Regex">
+                  <local:Bitmap Source="{DynamicResource regex}" Margin="1" Height="16" Width="16" />
+                </RadioButton>
+              </StackPanel>
+            </StackPanel>
+            <ListView Name="PART_list" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+              <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource {x:Static GridView.GridViewItemContainerStyleKey}}" TargetType="{x:Type ListViewItem}">
+                  <Setter Property="Control.Foreground" Value="{DynamicResource LightTextBrush}" />
+                  <Style.Triggers>
+                    <DataTrigger Binding="{Binding Fg}" Value="False">
+                      <Setter Property="Control.Foreground" Value="{DynamicResource DarkTextBrush}" />
+                    </DataTrigger>
+                  </Style.Triggers>
+                </Style>
+              </ListView.ItemContainerStyle>
+              <ListView.View>
+                <GridView>
+                  <GridView.Columns>
+                    <GridViewColumn Width="200">
+                      <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                          <StackPanel Orientation="Horizontal">
+                            <local:Bitmap Margin="2" Source="{Binding Img}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Txt}" />
+                          </StackPanel>
+                        </DataTemplate>
+                      </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Own}" />
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Asm}" />
+                  </GridView.Columns>
+                </GridView>
+              </ListView.View>
+            </ListView>
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="local:Search.IsSearching" Value="True">
+              <Setter TargetName="abort" Property="UIElement.Visibility" Value="Visible" />
+              <Setter TargetName="search" Property="UIElement.Visibility" Value="Hidden" />
+              <Setter TargetName="PART_text" Property="UIElement.IsEnabled" Value="False" />
+              <Setter TargetName="PART_type" Property="UIElement.IsEnabled" Value="False" />
+              <Setter TargetName="PART_member" Property="UIElement.IsEnabled" Value="False" />
+              <Setter TargetName="PART_const" Property="UIElement.IsEnabled" Value="False" />
+              <Setter TargetName="PART_exact" Property="UIElement.IsEnabled" Value="False" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type local:AssemblyManager}" TargetType="{x:Type local:AssemblyManager}">
+    <Style.Resources />
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:AssemblyManager}">
+          <TreeView Name="PART_treeView" HorizontalContentAlignment="Stretch">
+            <TreeView.ItemContainerStyle>
+              <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                <Setter Property="TreeViewItem.IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                <Setter Property="TreeViewItem.IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                <Setter Property="FrameworkElement.ContextMenu" Value="{Binding Menu, Converter={x:Static local:MenuConverter.Instance}, ConverterParameter={x:Static local:App.Reflector}}" />
+              </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+              <HierarchicalDataTemplate DataType="{x:Type local:BaseNode}">
+                <DataTemplateKey.Key>{x:Type local:BaseNode}</DataTemplateKey.Key>
+                <HierarchicalDataTemplate.ItemsSource>
+                  <MultiBinding Converter="{x:Static local:AsmNodesConverter.Instance}">
+                    <Binding Path="Children" />
+                    <Binding />
+                  </MultiBinding>
+                </HierarchicalDataTemplate.ItemsSource>
+                <StackPanel Orientation="Horizontal" Background="#00FFFFFF">
+                  <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="0,0,5,0" Width="16" Height="16" Source="{Binding Icon}" />
+                  <TextBlock Name="txt" TextBlock.Foreground="{DynamicResource LightTextBrush}" VerticalAlignment="Center" Text="{Binding Text}" />
+                </StackPanel>
+                <HierarchicalDataTemplate.Triggers>
+                  <DataTrigger Value="False" Binding="{Binding IsShine}">
+                    <Setter TargetName="txt" Value="{DynamicResource DarkTextBrush}" Property="TextBlock.Foreground" />
+                  </DataTrigger>
+                </HierarchicalDataTemplate.Triggers>
+              </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type local:Analyzer}" TargetType="{x:Type local:Analyzer}">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <TreeView Name="PART_treeView" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+            <TreeView.ItemContainerStyle>
+              <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                <Setter Property="TreeViewItem.IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                <Setter Property="TreeViewItem.IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                <Setter Property="FrameworkElement.ContextMenu" Value="{Binding Menu, Converter={x:Static local:MenuConverter.Instance}, ConverterParameter={x:Static local:App.Reflector}}" />
+              </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeView.ItemTemplate>
+              <HierarchicalDataTemplate DataType="{x:Type local:BaseNode}">
+                <DataTemplateKey.Key>{x:Type local:BaseNode}</DataTemplateKey.Key>
+                <HierarchicalDataTemplate.ItemsSource>
+                  <MultiBinding Converter="{x:Static local:AnalyzeNodesConverter.Instance}">
+                    <Binding Path="Children" />
+                    <Binding />
+                  </MultiBinding>
+                </HierarchicalDataTemplate.ItemsSource>
+                <StackPanel Orientation="Horizontal" Background="#00FFFFFF">
+                  <Image RenderOptions.BitmapScalingMode="NearestNeighbor" Margin="0,0,5,0" Width="16" Height="16" Source="{Binding Icon}" />
+                  <TextBlock Name="txt" TextBlock.Foreground="{DynamicResource LightTextBrush}" VerticalAlignment="Center" Text="{Binding Text}" />
+                </StackPanel>
+                <HierarchicalDataTemplate.Triggers>
+                  <DataTrigger Value="False" Binding="{Binding IsShine}">
+                    <Setter TargetName="txt" Value="{DynamicResource DarkTextBrush}" Property="TextBlock.Foreground" />
+                  </DataTrigger>
+                </HierarchicalDataTemplate.Triggers>
+              </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type local:ItemProps}" TargetType="{x:Type local:ItemProps}">
+    <Style.Resources>
+      <ContextMenu x:Key="menu" FontFamily="{Binding UIFont, Source={x:Static local:Options.Instance}}" FontSize="{Binding UIFontSize, Source={x:Static local:Options.Instance}}">
+        <MenuItem Name="copy" Header="Copy" />
+        <MenuItem Name="copyValue" Header="Copy Value" />
+      </ContextMenu>
+    </Style.Resources>
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:ItemProps}">
+          <ListView Name="PART_view" ItemsSource="{TemplateBinding local:ItemProps.Items}">
+            <ListView.View>
+              <GridView>
+                <GridView.Columns>
+                  <GridViewColumn Width="100" Header="Name" DisplayMemberBinding="{Binding Name}" />
+                  <GridViewColumn Width="450" Header="Value" DisplayMemberBinding="{Binding Value}" />
+                </GridView.Columns>
+              </GridView>
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+              <Style BasedOn="{StaticResource {x:Static GridView.GridViewItemContainerStyleKey}}" TargetType="{x:Type ListViewItem}">
+                <Setter Property="FrameworkElement.ContextMenu" Value="{StaticResource menu}" />
+              </Style>
+            </ListView.ItemContainerStyle>
+          </ListView>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

@@ -1,0 +1,10 @@
+out/**
+out
+tmp
+tmp/**
+obj
+obj/**
+bin
+bin/**
+tools/ConsoleBuilder.exe
+tools/GuiBuilder.exe
